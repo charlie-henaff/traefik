@@ -13,7 +13,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "3306:3306"
     labels:
       - traefik.http.routers.api.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)
       - traefik.http.routers.api.service=api@internal
