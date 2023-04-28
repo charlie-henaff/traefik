@@ -30,9 +30,6 @@ Reverse proxy for development uses
     ```
     # [RULES] for subdomains like *.myservice.localhost
     HostRegexp(`myservice.localhost`, `{subdomain:[A-Za-z0-9-]+}.myservice.localhost`)
-    
-    # [RULES] for db access
-    HostSNI(`*`)
     ```
 - Start traefix  
   ```sh
