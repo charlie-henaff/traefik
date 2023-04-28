@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  traefik:
+    image: traefik
+    container_name: traefik
+    networks: [ traefiknet ]
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--logLevel=DEBUG"
+    ports:
+      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    labels:
+      - traefik.http.routers.api.rule=Host(`${TRAEFIK_DASHBOARD_DOMAIN}`)
+      - traefik.http.routers.api.service=api@internal
+      - traefik.docker.network=`${TRAEFIK_NETWORK_NAME}`
+      - traefik.http.routers.api.entryPoints=secure,insecure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.toml:/traefik.toml
+
+networks:
+  traefiknet:
+    name: ${TRAEFIK_NETWORK_NAME}
+    driver: bridge
